@@ -32,6 +32,15 @@ app.get("/api/products", async (req, res, next) => {
   }
 });
 
+// GET - user favorite by ID
+app.get("/api/users/:id/favorites", async (req, res, next) => {
+  try {
+    res.send(await fetchFavorite(req.params.id));
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 const init = async () => {
   await client.connect();
   console.log("connected to database");
