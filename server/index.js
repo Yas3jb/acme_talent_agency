@@ -13,6 +13,7 @@ const {
 // import express
 const express = require("express");
 const app = express();
+app.use(express.json());
 
 // GET - users
 app.get("/api/users", async (req, res, next) => {
@@ -41,6 +42,20 @@ app.get("/api/users/:id/favorites", async (req, res, next) => {
   }
 });
 
+// POST - user favorite by ID
+app.post("/api/users/:id/favorites", async (req, res, next) => {
+  try {
+    res.status(201).send(
+      await createFavorite({
+        user_id: req.params.id,
+        product_id: req.body.product_id,
+      })
+    );
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 const init = async () => {
   await client.connect();
   console.log("connected to database");
@@ -55,6 +70,7 @@ const init = async () => {
       createProduct({ name: "smartphone" }),
       createProduct({ name: "smartwatch" }),
       createProduct({ name: "tablet" }),
+      createProduct({ name: "TV" }),
     ]);
   const users = await fetchUsers();
   console.log(users);
