@@ -10,6 +10,10 @@ const {
   deleteFavorite,
 } = require("./db");
 
+// import express
+const express = require("express");
+const app = express();
+
 const init = async () => {
   await client.connect();
   console.log("connected to database");
@@ -41,5 +45,8 @@ const init = async () => {
   console.log(await fetchFavorite(moe.id));
   await deleteFavorite(favorite[0].id);
   console.log(await fetchFavorite(moe.id));
+
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => console.log(`listening on port ${port}`));
 };
 init();
