@@ -14,6 +14,24 @@ const {
 const express = require("express");
 const app = express();
 
+// GET - users
+app.get("/api/users", async (req, res, next) => {
+  try {
+    res.send(await fetchUsers());
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+// GET - products
+app.get("/api/products", async (req, res, next) => {
+  try {
+    res.send(await fetchProducts());
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 const init = async () => {
   await client.connect();
   console.log("connected to database");
