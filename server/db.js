@@ -54,7 +54,7 @@ const createProduct = async ({ name }) => {
 // create favorite
 const createFavorite = async ({ user_id, product_id }) => {
   const SQL = `
-      INSERT INTO favorite(id, user_id, product_id) VALUES($1, $2, $3) RETURNING *
+      INSERT INTO favorites(id, user_id, product_id) VALUES($1, $2, $3) RETURNING *
     `;
   const response = await client.query(SQL, [uuid.v4(), user_id, product_id]);
   return response.rows[0];
@@ -81,7 +81,7 @@ const fetchProducts = async () => {
 // fetch favorite
 const fetchFavorite = async (id) => {
   const SQL = `
-      SELECT * FROM favorite
+      SELECT * FROM favorites
       WHERE user_id = $1
     `;
   const response = await client.query(SQL, [id]);
