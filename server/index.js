@@ -56,6 +56,16 @@ app.post("/api/users/:id/favorites", async (req, res, next) => {
   }
 });
 
+// DELETE - user favorite by ID
+app.delete("/api/users/:userId/favorites/:id", async (req, res, next) => {
+  try {
+    await deleteFavorite({ id: req.params.id, user_id: req.params.userId });
+    res.sendStatus(204);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 const init = async () => {
   await client.connect();
   console.log("connected to database");
