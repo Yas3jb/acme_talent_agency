@@ -3,8 +3,10 @@ const {
   createTables,
   createUser,
   createProduct,
+  createFavorite,
   fetchUsers,
   fetchProducts,
+  fetchFavorite,
 } = require("./db");
 
 const init = async () => {
@@ -27,5 +29,14 @@ const init = async () => {
 
   const products = await fetchProducts();
   console.log(products);
+
+  const favorite = await Promise.all([
+    createFavorite({ user_id: moe.id, product_id: laptop.id }),
+    createFavorite({ user_id: moe.id, product_id: smartphone.id }),
+    createFavorite({ user_id: ethyl.id, product_id: smartwatch.id }),
+    createFavorite({ user_id: lucy.id, product_id: tablet.id }),
+  ]);
+
+  console.log(await fetchFavorite(moe.id));
 };
 init();
