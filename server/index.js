@@ -1,4 +1,11 @@
-const { client, createTables, createUser, createProduct } = require("./db");
+const {
+  client,
+  createTables,
+  createUser,
+  createProduct,
+  fetchUsers,
+  fetchProducts,
+} = require("./db");
 
 const init = async () => {
   await client.connect();
@@ -15,7 +22,10 @@ const init = async () => {
       createProduct({ name: "smartwatch" }),
       createProduct({ name: "tablet" }),
     ]);
-  console.log(moe.id);
-  console.log(laptop.id);
+  const users = await fetchUsers();
+  console.log(users);
+
+  const products = await fetchProducts();
+  console.log(products);
 };
 init();
