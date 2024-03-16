@@ -69,6 +69,16 @@ const fetchProducts = async () => {
   return response.rows;
 };
 
+// fetch favorite
+const fetchFavorite = async (id) => {
+  const SQL = `
+      SELECT * FROM favorite
+      WHERE user_id = $1
+    `;
+  const response = await client.query(SQL, [id]);
+  return response.rows;
+};
+
 module.exports = {
   client,
   createTables,
@@ -76,4 +86,5 @@ module.exports = {
   createProduct,
   fetchUsers,
   fetchProducts,
+  fetchFavorite,
 };
