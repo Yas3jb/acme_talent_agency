@@ -7,6 +7,7 @@ const {
   fetchUsers,
   fetchProducts,
   fetchFavorite,
+  deleteFavorite,
 } = require("./db");
 
 const init = async () => {
@@ -37,6 +38,8 @@ const init = async () => {
     createFavorite({ user_id: lucy.id, product_id: tablet.id }),
   ]);
 
+  console.log(await fetchFavorite(moe.id));
+  await deleteFavorite(favorite[0].id);
   console.log(await fetchFavorite(moe.id));
 };
 init();
