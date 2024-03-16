@@ -27,7 +27,27 @@ const createTables = async () => {
   await client.query(SQL);
 };
 
+// create user
+const createUser = async ({ username, password }) => {
+  const SQL = `
+      INSERT INTO users(id, username, password) VALUES($1, $2, $3) RETURNING *
+    `;
+  const response = await client.query(SQL, [uuid.v4(), username, password]);
+  return response.rows[0];
+};
+
+// create product
+const createProduct = async ({ name }) => {
+  const SQL = `
+      INSERT INTO products(id, name) VALUES($1, $2) RETURNING *
+    `;
+  const response = await client.query(SQL, [uuid.v4(), name]);
+  return response.rows[0];
+};
+
 module.exports = {
   client,
   createTables,
+  createUser,
+  createProduct,
 };
