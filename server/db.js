@@ -51,6 +51,15 @@ const createProduct = async ({ name }) => {
   return response.rows[0];
 };
 
+// create favorite
+const createFavorite = async ({ user_id, product_id }) => {
+  const SQL = `
+      INSERT INTO favorite(id, user_id, product_id) VALUES($1, $2, $3) RETURNING *
+    `;
+  const response = await client.query(SQL, [uuid.v4(), user_id, product_id]);
+  return response.rows[0];
+};
+
 // fetch users
 const fetchUsers = async () => {
   const SQL = `
@@ -84,6 +93,7 @@ module.exports = {
   createTables,
   createUser,
   createProduct,
+  createFavorite,
   fetchUsers,
   fetchProducts,
   fetchFavorite,
